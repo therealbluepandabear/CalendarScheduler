@@ -1,11 +1,17 @@
 package com.example.calendarscheduler
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.calendarscheduler.databinding.ActivityMainBinding
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+
 
 const val format = "hh:mm a"
 const val threadInterval = 60
@@ -18,6 +24,18 @@ class MainActivity : AppCompatActivity() {
         setBindings()
 
         update()
+        addRectangles()
+    }
+
+    private fun addRectangles() {
+        for (i in 0..24) {
+            val view = View(this)
+            view.layoutParams = LinearLayout.LayoutParams(Resources.getSystem().displayMetrics.widthPixels, (Resources.getSystem().displayMetrics.heightPixels / 24), 1.0f)
+
+            if (i % 2 == 0) view.setBackgroundColor(Color.WHITE) else view.setBackgroundColor(Color.LTGRAY)
+
+            binding.rectangleLayout.addView(view)
+        }
     }
 
     private fun update() {
