@@ -3,9 +3,8 @@ package com.example.calendarscheduler
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calendarscheduler.databinding.ActivityMainBinding
@@ -28,9 +27,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addRectangles() {
-        for (i in 0..24) {
-            val view = View(this)
+        for (i in 0..23) {
+            val view = LinearLayout(this)
             view.layoutParams = LinearLayout.LayoutParams(Resources.getSystem().displayMetrics.widthPixels, (Resources.getSystem().displayMetrics.heightPixels / 24), 1.0f)
+
+            val txt = TextView(this)
+
+            txt.text = "$i a.m."
+
+            if (i == 0) {
+                txt.text = "12 a.m."
+            }
+
+            if (i > 12) {
+                txt.text = "${(i - 12)} p.m."
+            }
+
+            view.addView(txt)
 
             if (i % 2 == 0) view.setBackgroundColor(Color.WHITE) else view.setBackgroundColor(Color.LTGRAY)
 
