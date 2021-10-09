@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">CalendarScheduler</string>
+    <string name="kanboard">Kanboard</string>
+    <string name="calendar">Calendar</string>
+    <string name="gantt_chart">Gantt Chart</string>
 </resources>
