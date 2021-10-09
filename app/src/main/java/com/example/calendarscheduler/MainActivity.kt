@@ -40,16 +40,9 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
                 }
             }
-        };
+        }
         t.start()
     }
-
-//    private fun setText() {
-//        binding.timeView.y = yVal
-//        binding.timeTextView.y = yVal
-//
-//        binding.timeTextView.text = DateTimeFormatter.ofPattern(format).format(instance)
-//    }
 
     private fun setBindings() {
         binding = ActivityMainBinding.inflate(layoutInflater)
