@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
         setBindings()
 
         update()
-        addRectangles()
+        addHourlyRectangles()
     }
 
-    private fun addRectangles() {
+    private fun addHourlyRectangles() {
         for (i in 0..23) {
             val view = LinearLayout(this)
             view.layoutParams = LinearLayout.LayoutParams(Resources.getSystem().displayMetrics.widthPixels, (Resources.getSystem().displayMetrics.heightPixels / 24), 1.0f)
