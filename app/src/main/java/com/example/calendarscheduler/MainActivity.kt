@@ -8,8 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calendarscheduler.databinding.ActivityMainBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -20,10 +19,11 @@ const val threadInterval = 60
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
         setBindings()
 
+        updateText()
         update()
         addHourlyRectangles()
     }
@@ -54,27 +54,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun update() {
-        val t: Thread = object : Thread() {
-            override fun run() {
-                try {
-                    while (!isInterrupted) {
-                        sleep(threadInterval.toLong())
-                        runOnUiThread {
-                            val instance: LocalTime = LocalTime.now()
-                            val yVal = TimeUtilities.toYValue()
-
-                            binding.timeView.y = yVal
-                            binding.timeTextView.y = yVal + 10
-
-                            binding.timeTextView.text = DateTimeFormatter.ofPattern(format).format(instance)
-                        }
-                    }
-                } catch (e: InterruptedException) {
-                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
+        GlobalScope.launch {
+            while (isActive) {
+                delay(1000L)
+                runOnUiThread {
+                    updateText()
                 }
             }
         }
-        t.start()
+    }
+
+    private fun updateText() {
+        val instance: LocalTime = LocalTime.now()
+        val yVal = TimeUtilities.toYValue()
+
+        binding.timeView.y = yVal
+        binding.timeTextView.y = yVal + 10
+
+        binding.timeTextView.text = DateTimeFormatter.ofPattern(format).format(instance)
     }
 
     private fun setBindings() {
